@@ -14,7 +14,14 @@ app.get("/*", (_, res) => res.redirect("/"));
 const httpServer = http.createServer(app);
 const wsServer = SocketIo(httpServer);
 
-wsServer.on("connection", (socket) => console.log(socket));
+wsServer.on("connection", (socket) => {
+  socket.on("enter_room", (msg, done) => {
+    console.log(msg);
+    setTimeout(() => {
+      done();
+    }, 10000);
+  });
+});
 
 // const wss = new WebSocket.Server({ server });
 // const sockets = [];
